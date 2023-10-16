@@ -85,7 +85,7 @@ with open('/tmp/ecto_erd.json', 'w') as f:
 # Find environment to prepare for S3 Upload
 ENVIRONMENT = sys.argv[1]
 
-if ENVIRONMENT == None or ENVIRONMENT.strip() == "" or ENVIRONMENT.strip() == "local"
+if ENVIRONMENT == None or ENVIRONMENT.strip() == "" or ENVIRONMENT.strip() == "local":
     ENVIRONMENT = "local"
 
 if ENVIRONMENT.strip() == "prod":
