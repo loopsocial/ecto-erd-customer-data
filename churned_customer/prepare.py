@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 
 # initialize an empty dictionary
 erd_dict = {}
