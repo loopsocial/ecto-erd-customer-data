@@ -83,31 +83,17 @@ with open('/tmp/ecto_erd.json', 'w') as f:
     f.write(json.dumps(erd_dict, indent=4))
 
 # Find environment to prepare for S3 Upload
-if "GITHUB_REF" in os.environ:
-    GITHUB_REF = os.environ["GITHUB_REF"]
-else:
-    GITHUB_REF = ""
+ENVIRONMENT = sys.argv[1]
 
-if GITHUB_REF == None or GITHUB_REF.strip() == "":
-    BUCKET = "fw-temp-gdpr-deleted-data-loop-staging"
+if ENVIRONMENT == None or ENVIRONMENT.strip() == "" or ENVIRONMENT.strip() == "local"
     ENVIRONMENT = "local"
-else:
-    GITHUB_BRANCH_NAME = GITHUB_REF.split('/')[-1]
 
-    # if GITHUB_BRANCH_NAME contains substring prod
-    if GITHUB_BRANCH_NAME.find("master") != -1:
-        BUCKET = "fw-temp-gdpr-deleted-data-loop-prod"
-        ENVIRONMENT = "prod"
-    else:
-        BUCKET = "fw-temp-gdpr-deleted-data-loop-staging"
-        if GITHUB_BRANCH_NAME.find("staging") != -1:
-            ENVIRONMENT = "staging"
-        elif GITHUB_BRANCH_NAME.find("dev") != -1:
-            ENVIRONMENT = "dev"
-        elif GITHUB_BRANCH_NAME.find("sandbox") != -1:
-            ENVIRONMENT = "sandbox"
-        else:
-            ENVIRONMENT = "unknown"
+if ENVIRONMENT.strip() == "prod":
+    BUCKET = "fw-temp-gdpr-deleted-data-loop-prod"
+else:
+    BUCKET = "fw-temp-gdpr-deleted-data-loop-staging"
+
+ENVIRONMENT = ENVIRONMENT.strip()
 
 # Print the bucket and environment
 print("BUCKET: " + BUCKET)
