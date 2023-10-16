@@ -75,6 +75,9 @@ with open('/tmp/ecto_erd.qdbd', 'r') as f:
             if not (current_table_name == 'favorite_video_styles' and foreign_table == 'users'):
                 erd_dict['tables'][primary_key_table_index]['referenced_by'].append({'table_name': current_table_name, 'foreign_key': foreign_key})
 
+# Print the dictionary
+print(json.dumps(erd_dict, indent=4))
+
 # Dump the dictionary to a json file
 with open('/tmp/ecto_erd.json', 'w') as f:
     f.write(json.dumps(erd_dict, indent=4))
@@ -106,6 +109,14 @@ else:
         else:
             ENVIRONMENT = "unknown"
 
+# Print the bucket and environment
+print("BUCKET: " + BUCKET)
+print("ENVIRONMENT: " + ENVIRONMENT)
+
+# Command to upload json file to S3
+s3_upload_command = "aws s3 cp /tmp/ecto_erd.json s3://" + BUCKET + "/" + ENVIRONMENT +  "/ecto_erd.json"
+print(s3_upload_command)
+
 # Upload json file to S3
 # Deliberately not using boto3 to avoid dependency
-os.system("aws s3 cp /tmp/ecto_erd.json s3://" + BUCKET + "/" + ENVIRONMENT +  "/ecto_erd.json")
+os.system(s3_upload_command)
