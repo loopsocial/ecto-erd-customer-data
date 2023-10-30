@@ -51,10 +51,6 @@ defmodule Ecto.ERD.Document.QuickDBD do
             #   "FK #{operator} #{Render.in_quotes(from_source)}.#{Render.in_quotes(from_field)}"
             # ]
 
-            # IO.inspect(assoc_types)
-            # IO.inspect(from_source)
-            # IO.inspect(from_field)
-
             operator = ">-"
 
             result =
