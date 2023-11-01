@@ -12,8 +12,7 @@ defmodule Ecto.ERD.Document.QuickDBD do
       Map.new(edges, fn %Edge{to: {to_source, _to_schema, {:field, to_field}}} = edge ->
         {{to_source, to_field}, edge}
       end)
-    IO.inspect(edges)
-    IO.inspect(foreign_keys_mapping, limit: :infinity)
+    IO.inspect(edges, limit: :infinity)
 
     Enum.map_join(nodes, "\n\n", &render_node(&1, foreign_keys_mapping))
   end
